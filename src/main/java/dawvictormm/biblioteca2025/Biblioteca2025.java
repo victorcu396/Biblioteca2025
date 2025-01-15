@@ -229,7 +229,7 @@ public class Biblioteca2025 {
                     break;
                 }
                 case 5:{
-                    ordenado();
+                    listarLibrosPorGenero();
                     break;
                 }
             }
@@ -314,9 +314,22 @@ public class Biblioteca2025 {
         }
     }
     
-    private void ordenado(){
-        System.out.println("Dime el genero de libros que quieres ver; ");
-        
+    private void listarLibrosPorGenero() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Introduce el género de los libros que deseas ver: ");
+        String genero = sc.nextLine();
+
+        boolean encontrado = false;
+        for (Libro libro : libros) {
+            if (libro.getGenero().equalsIgnoreCase(genero)) {
+                System.out.println(libro);
+                encontrado = true;
+            }
+        }
+
+        if (!encontrado) {
+            System.out.println("No hay libros registrados en ese género.");
+        }
     }
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="MENU USUARIOS">
@@ -674,6 +687,51 @@ public class Biblioteca2025 {
         }
     }
 //</editor-fold>
+    
+    
+    private void usuariosConPrestamosVencidos() {
+        System.out.println("Usuarios con préstamos vencidos:");
+        for (Prestamo p : prestamos) {
+            if (p.getFechaDev().isBefore(LocalDate.now())) {
+                System.out.println(p.getUsuarioPrest().getNombre() + " - " + p.getLibroPrest().getTitulo());
+            }
+        }
+    }
+    private void buscarLibrosPorAutor() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Introduce el nombre del autor: ");
+        String autor = sc.nextLine();
+
+        boolean encontrado = false;
+        for (Libro libro : libros) {
+            if (libro.getAutor().equalsIgnoreCase(autor)) {
+                System.out.println(libro);
+                encontrado = true;
+            }
+        }
+
+        if (!encontrado) {
+            System.out.println("No se encontraron libros de ese autor.");
+        }
+    }
+    private void contarEjemplaresDisponibles() {
+        String isbn = solicitaIsbn();
+        int pos = buscaIsbn(isbn);
+
+        if (pos != -1) {
+            System.out.println("Ejemplares disponibles: " + libros.get(pos).getEjemplares());
+        } else {
+            System.out.println("No se encontró el libro con ese ISBN.");
+        }
+    }
+    private void eliminarPrestamosVencidos() {
+        for (int i = prestamosHist.size() - 1; i >= 0; i--) {
+            if (prestamosHist.get(i).getFechaDev().isBefore(LocalDate.now())) {
+                prestamosHist.remove(i);
+            }
+        }
+        System.out.println("Préstamos vencidos eliminados del historial.");
+    }
     
 }
 
