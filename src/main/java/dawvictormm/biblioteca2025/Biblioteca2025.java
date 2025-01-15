@@ -214,7 +214,7 @@ public class Biblioteca2025 {
             System.out.println("\t\t\t\t6 - ORDEN POR EJEMPLARES");
             System.out.println("\t\t\t\t7 - LISTAR LIBROS SIN EJEMPLARES");
             System.out.println("\t\t\t\t8 - LISTAR LIBROS POR AUTOR");
-            System.out.println("\t\t\t\t8 - CONTAR EJEMPLARES DISPONIBLES");
+            System.out.println("\t\t\t\t9 - CONTAR EJEMPLARES DISPONIBLES");
             System.out.println("\t\t\t\t10 - VOLVER"); 
 
             opcion=sc.nextInt(); 
