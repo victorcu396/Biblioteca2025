@@ -148,6 +148,23 @@ public class Biblioteca2025 {
 
         }return pos; 
     }
+     
+     public int stockLibro(String isbn) throws LibroNoExiste, LibroNoDisponible{
+         int pos=buscaIsbn(isbn);
+         if (pos==-1) {
+             throw new LibroNoExiste ("No existe en esta biblioteca la referencia "+isbn);
+         }else if (libros.get(pos).getEjemplares()==0) {
+             String cadena="No ha unidades del libro"+libros.get(pos).getTitulo()+" disponibles actualmete" + "\n Fechas de devolucioón previstas para el libro: ";
+             for (Prestamo p : prestamos) {
+                 if (p.getLibroPrest().getIsbn().equals(isbn)) {
+                     cadena=cadena +"\n * "+p.getFechaDev();
+                 }
+             }
+             throw new LibroNoDisponible (cadena);
+         }else return pos;
+     }
+
+     
         /**
          * Método para buscar un préstamo en la colección préstamos
          * @param dni (string) del usuario que realizó el préstamo
@@ -165,7 +182,7 @@ public class Biblioteca2025 {
              }
          }return pos;
      }
-//</editor-fold>
+     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="MENU GENERAL">
     private void menu() {
             Scanner sc=new Scanner (System.in); 
@@ -260,31 +277,43 @@ public class Biblioteca2025 {
         }while(opcion !=10);
     }
     private void nuevoLibro() {
-        String isbn, titulo, autor, genero;
-        int ejemplares;
+        String isbn, titulo, autor, genero, ejemplaresSt;
         Scanner sc=new Scanner (System.in); 
-
-        System.out.println("Nuevo Contacto"); 
-
+        System.out.println("Nuevo Contacto");
+        
         System.out.println("isbn"); 
-        isbn = sc.nextLine(); 
-
+            isbn = sc.nextLine();
         System.out.println("titulo"); 
-        titulo = sc.nextLine(); 
-        
+            titulo = sc.nextLine();  
         System.out.println("autor"); 
-        autor = sc.nextLine(); 
-        
+            autor = sc.nextLine();     
         System.out.println("genero"); 
-        genero = sc.nextLine(); 
+            genero = sc.nextLine(); 
+        /**
+         * do {
+            System.out.println("Indica el número de ejemplares del libro");
+            ejemplaresSt=sc.next();
+        } while(!MetodosAuxiliares.esInt(ejemplaresSt));
+        int ejemplares=Integer.parseInt(ejemplaresSt);
+         */
+        do {
+            System.out.println("Indica el número de ejemplares del libro: ");
+            ejemplaresSt=sc.next();
+        } while (!MetodosAuxiliares.esInt(ejemplaresSt));
+        int ejemplares=Integer.parseInt(ejemplaresSt);
         
-        System.out.println("ejemplares"); 
-        ejemplares = sc.nextInt(); 
+       libros.add(new Libro(isbn, titulo, autor, genero, ejemplares));
+        System.out.println("El libro ha sido creado");
         
-        Libro l=new Libro(isbn,titulo, autor, genero, ejemplares); 
-        libros.add(l); 
-        
-        
+        /**
+         * Si quisiésemos indicar el precio del libro, se hacría de la siguiente manera:
+         * String precioSt;
+             do {
+                    System.out.println("Indica el precio del libro: ");
+                    precioSt=sc.next();
+             } while (!esDouble(precioSt));
+             double precio=Double.parseDouble(precioSt);
+         */
     }
     private void eliminarLibro() {
         Scanner sc=new Scanner (System.in); 
