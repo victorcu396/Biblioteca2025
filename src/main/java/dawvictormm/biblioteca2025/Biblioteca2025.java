@@ -66,7 +66,7 @@ public class Biblioteca2025 {
         prestamos.add(new Prestamo(libros.get(2),usuarios.get(1), hoy, hoy.plusDays(15)));
         prestamos.add(new Prestamo(libros.get(2),usuarios.get(1), hoy, hoy.plusDays(15)));
         prestamos.add(new Prestamo(libros.get(2),usuarios.get(1), hoy, hoy.plusDays(15)));
-        
+        //hola mundo adios mudito
         
         for (Libro l : libros) {
             System.out.println(l);
